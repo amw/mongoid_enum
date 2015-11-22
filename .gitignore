@@ -1,0 +1,4 @@
+/doc
+/Gemfile.lock
+/log/test.log
+/mongoid_enum-*.gem

@@ -1,0 +1,11 @@
+Metrics/LineLength:
+  Max: 90
+
+# I'm going to use the whole Unicode until I run into problems. Because progress.
+# And because people have weird names.
+#   - Adam Wróbel
+Style/AsciiComments:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
