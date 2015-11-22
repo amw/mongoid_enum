@@ -50,6 +50,8 @@ Constant name is a pluralized field name set in SCREAMING\_SNAKE\_CASE.
     Part::QUALITY_CONTROLS["passed"] # true
     Part::QUALITY_CONTROLS[:failed]  # false
 
+Read more in [documentation](http://www.rubydoc.info/gems/mongoid_enum/Mongoid/Enum).
+
 # Differences from ActiveRecord
 
 1. Default values are strings, not integers. I think it fits MongoDB better.
