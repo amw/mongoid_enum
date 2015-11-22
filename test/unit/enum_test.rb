@@ -147,6 +147,16 @@ class EnumTest < ActiveSupport::TestCase
     assert_equal ["Status is invalid"], @book.errors.full_messages
   end
 
+  test "raises on save skipping validation" do
+    @book.status = "invalid-status-key"
+    assert_not @book.written?
+    assert_not @book.valid?
+    e = assert_raises Mongoid::Enum::InvalidKeyError do
+      @book.save validate: false
+    end
+    assert_equal "invalid enum key: invalid-status-key", e.message
+  end
+
   test "reports invalid value read from db" do
     Book.where(_id: @book.id).set read_status: 10
     @book.reload
