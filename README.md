@@ -60,6 +60,9 @@ Constant name is a pluralized field name set in SCREAMING\_SNAKE\_CASE.
 
 3. I do not raise exception when invalid value is assigned. Instead document fails
    validation. Assigned invalid value is remembered and can be corrected in forms.
+   Exception will still be raised if you try to save invalid label by skipping validation
+   (`save validate: false`). That's because the document does not know how to convert
+   invalid enum option to database value.
 
 # Credits
 
