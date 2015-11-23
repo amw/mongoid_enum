@@ -1,4 +1,6 @@
-# Introduction
+# Mongoid::Enum
+
+[![Build Status](https://travis-ci.org/amw/mongoid_enum.svg?branch=master)](https://travis-ci.org/amw/mongoid_enum)
 
 Enum implementation for Mongoid. Similar to that found in ActiveRecord.
 
