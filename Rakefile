@@ -5,7 +5,7 @@ require "rdoc/task"
 task default: [:test, :rubocop]
 
 task :clean_log do
-  File.unlink "log/test.log"
+  File.unlink "log/test.log" if File.exist? "log/test.log"
 end
 
 Rake::TestTask.new test: :clean_log do |t|
