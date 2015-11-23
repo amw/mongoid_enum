@@ -98,7 +98,7 @@ class EnumTest < ActiveSupport::TestCase
     assert_nil @book["quality_control"]
     assert_equal @book.id, Book.qc_pending.desc(:_id).first.id
     @book.qc_passed!
-    assert_not_equal @book.id, Book.qc_pending.desc(:_id).first.id
+    assert_not_equal @book, Book.qc_pending.desc(:_id).first
   end
 
   test "atomic set on instance" do
