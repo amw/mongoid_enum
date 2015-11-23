@@ -34,6 +34,8 @@ the enum mapping:
     end
 
     part = Part.qc_pending.first
+    part.qc_pending?        # true
+    part["quality_control"] # nil
     part.quality_control    # "pending"
     part.qc_passed!
     part.quality_control    # "passed"

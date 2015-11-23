@@ -26,6 +26,25 @@ module Mongoid # :nodoc:
   #   conversation.status.nil? # => true
   #   conversation.status      # => nil
   #
+  #
+  # By default the whole label name is saved in the database as string, but you can
+  # explicitly declare values for each label. Strings, numbers, booleans, nil and some
+  # others types are allowed.
+  #
+  #   class Conversation
+  #     include Mongoid::Document
+  #     include Mongoid::Enum
+  #
+  #     enum status: { active: 0, archived: 1 }, _default: :active
+  #   end
+  #
+  # The mappings are exposed through a class constant with the pluralized field name.
+  # It defines the mapping using +HashWithIndifferentAccess+:
+  #
+  #   Conversation::STATUSES[:active]    # => 0
+  #   Conversation::STATUSES["archived"] # => 1
+  #
+  #
   # Scopes based on the allowed values of the enum field will be provided
   # as well. With the above example:
   #
@@ -38,31 +57,6 @@ module Mongoid # :nodoc:
   #   Conversation.where(status: [:active, :archived])
   #   Conversation.not.where(status: :active)
   #
-  # You can set the default value:
-  #
-  #   class Conversation
-  #     include Mongoid::Document
-  #     include Mongoid::Enum
-  #
-  #     enum status: [ :active, :archived ], _default: :active
-  #   end
-  #
-  # Finally, it's also possible to explicitly map the relation between attribute and
-  # values stored in the database with a hash. The values don't even need to be Strings.
-  # Numbers, Booleans, nil and some others are allowed.
-  #
-  #   class Conversation
-  #     include Mongoid::Document
-  #     include Mongoid::Enum
-  #
-  #     enum status: { active: 0, archived: 1 }
-  #   end
-  #
-  # The mappings are exposed through a class constant with the pluralized attribute
-  # name. It defines the mapping in a +HashWithIndifferentAccess+:
-  #
-  #   Conversation::STATUSES[:active]    # => 0
-  #   Conversation::STATUSES["archived"] # => 1
   #
   # Defining an enum automatically adds a validator on its field. Assigning values
   # not included in enum definition will make the document invalid.
@@ -78,7 +72,7 @@ module Mongoid # :nodoc:
   #     include Mongoid::Document
   #     include Mongoid::Enum
   #
-  #     enum status: { active: 0, archived: 1 }
+  #     enum status: { active: 0, archived: 1 }, _default: :active
   #
   #     validates :status, presence: true
   #   end
@@ -106,6 +100,7 @@ module Mongoid # :nodoc:
   #   conversation.comments_inactive!
   #   conversation.comments_active? # => false
   #
+  #
   # If you want to you can give nil value an explicit label.
   #
   #   class Part
@@ -116,9 +111,12 @@ module Mongoid # :nodoc:
   #   end
   #
   #   part = Part.qc_pending.first
-  #   part.qc_pending? # true
+  #   part.qc_pending?        # true
+  #   part["quality_control"] # nil
+  #   part.quality_control    # "pending"
   #   part.qc_passed!
-  #   part.qc_pending? # false
+  #   part.quality_control    # "passed"
+  #   part["quality_control"] # true
   module Enum
     extend ActiveSupport::Concern
 
