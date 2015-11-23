@@ -1,0 +1,31 @@
+language: ruby
+
+sudo: false
+
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - 2.1
+  - 2.2
+  - jruby
+
+gemfile:
+  - Gemfile
+
+env:
+  global:
+    - CI="travis"
+    - JRUBY_OPTS="--server -J-Xms512m -J-Xmx1024m"
+  matrix:
+    - MONGODB=2.4.14
+    - MONGODB=2.6.11
+    - MONGODB=3.0.7
+
+before_script:
+  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz -O /tmp/mongodb.tgz
+  - tar -xvf /tmp/mongodb.tgz
+  - mkdir /tmp/data
+  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --dbpath /tmp/data --bind_ip 127.0.0.1 --auth &> /dev/null &
+
+notifications:
+  email: true
