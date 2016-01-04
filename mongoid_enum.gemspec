@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "mongoid_enum"
-  s.version     = "1.0.1"
+  s.version     = "1.1.0"
   s.summary     = "Enum fields for Mongoid"
   s.description = "Fields with closed set of possible values and helper methods to " \
                   "query/set them by label."
