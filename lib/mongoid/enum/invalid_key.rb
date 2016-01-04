@@ -13,7 +13,7 @@ module Mongoid
       end
 
       def raise_error
-        raise InvalidKeyError, "invalid enum key: #{original_key}"
+        fail InvalidKeyError, "invalid enum key: #{original_key}"
       end
       alias_method :bson_type, :raise_error
       alias_method :to_bson, :raise_error

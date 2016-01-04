@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
 
   s.extra_rdoc_files = %w(README.md)
-  s.rdoc_options << '--main' << 'README.md' << '--markup=tomdoc'
+  s.rdoc_options << "--main" << "README.md" << "--markup=tomdoc"
 
   s.required_ruby_version = ">= 1.9.3"
 

@@ -17,14 +17,14 @@ end
 FactoryGirl.find_definitions
 
 # wait until MongoDB instance is ready
-if (ENV['CI'] == 'travis')
+if ENV["CI"] == "travis"
   starting = true
-  client = Mongo::Client.new(['127.0.0.1:27017'])
+  client = Mongo::Client.new(["127.0.0.1:27017"])
   while starting
     begin
       client.command(Mongo::Server::Monitor::STATUS)
       break
-    rescue Mongo::Error::OperationFailure => e
+    rescue Mongo::Error::OperationFailure
       sleep(2)
       client.cluster.scan!
     end
