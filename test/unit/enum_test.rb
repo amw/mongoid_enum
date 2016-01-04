@@ -69,11 +69,6 @@ class EnumTest < ActiveSupport::TestCase
     assert_not_equal @book, Book.where(:read_status.in => [reading]).desc(:_id).first
   end
 
-  test "build from scope" do
-    assert Book.written.build.written?
-    assert_not Book.written.build.proposed?
-  end
-
   test "update by declaration" do
     assert @book.published?
     @book.written!
@@ -254,6 +249,7 @@ class EnumTest < ActiveSupport::TestCase
 
   test "building new objects with enum scopes" do
     assert Book.written.build.written?
+    assert_not Book.written.build.proposed?
     assert Book.finished.build.finished?
     assert Book.reading.build.reading?
     assert Book.in_spanish.build.in_spanish?
@@ -262,6 +258,7 @@ class EnumTest < ActiveSupport::TestCase
 
   test "creating new objects with enum scopes" do
     assert Book.written.create.written?
+    assert_not Book.written.create.proposed?
     assert Book.finished.create.finished?
     assert Book.reading.create.reading?
     assert Book.in_spanish.create.in_spanish?
