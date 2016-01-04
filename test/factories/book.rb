@@ -16,6 +16,7 @@ class Book
   enum font_size: { small: 8, medium: 10, large: 12 }, _prefix: :with,
        _suffix: true, _default: :medium
   enum quality_control: { pending: nil, passed: true, failed: false }, _prefix: :qc
+  enum genre: %w(drama comedy thriller), _plural_scopes: true
 
   def published!
     super
@@ -32,6 +33,7 @@ FactoryGirl.define do
     author_visibility :visible
     illustrator_visibility :visible
     font_size :medium
+    genre :comedy
   end
 
   factory :default_book, class: Book do

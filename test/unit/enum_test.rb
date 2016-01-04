@@ -48,6 +48,7 @@ class EnumTest < ActiveSupport::TestCase
     assert_equal @book, Book.in_english.desc(:_id).first
     assert_equal @book, Book.author_visibility_visible.desc(:_id).first
     assert_equal @book, Book.illustrator_visibility_visible.desc(:_id).first
+    assert_equal @book, Book.comedies.desc(:_id).first
   end
 
   test "find via where with labels" do
@@ -250,6 +251,8 @@ class EnumTest < ActiveSupport::TestCase
   test "building new objects with enum scopes" do
     assert Book.written.build.written?
     assert_not Book.written.build.proposed?
+    assert Book.thrillers.build.thriller?
+    assert_not Book.thrillers.build.comedy?
     assert Book.finished.build.finished?
     assert Book.reading.build.reading?
     assert Book.in_spanish.build.in_spanish?
@@ -259,6 +262,8 @@ class EnumTest < ActiveSupport::TestCase
   test "creating new objects with enum scopes" do
     assert Book.written.create.written?
     assert_not Book.written.create.proposed?
+    assert Book.thrillers.create.thriller?
+    assert_not Book.thrillers.create.comedy?
     assert Book.finished.create.finished?
     assert Book.reading.create.reading?
     assert Book.in_spanish.create.in_spanish?

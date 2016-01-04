@@ -54,6 +54,17 @@ Constant name is a pluralized field name set in SCREAMING\_SNAKE\_CASE.
     Part::QUALITY_CONTROLS["passed"] # true
     Part::QUALITY_CONTROLS[:failed]  # false
 
+You might prefer to use plural scopes if your field values are nouns:
+
+    class Attachment
+      include Mongoid::Document
+      include Mongoid::Enum
+
+      enum type: %w{image video}, _plural_scopes: true
+    end
+
+    Attachment.videos.count
+
 Read more in [documentation](http://www.rubydoc.info/gems/mongoid_enum/Mongoid/Enum).
 
 # Differences from ActiveRecord

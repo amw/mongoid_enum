@@ -57,6 +57,17 @@ module Mongoid # :nodoc:
   #   Conversation.where(status: [:active, :archived])
   #   Conversation.not.where(status: :active)
   #
+  # If your field values are nouns you might prefer to have your scopes pluralized:
+  #
+  #   class Attachment
+  #     include Mongoid::Document
+  #     include Mongoid::Enum
+  #
+  #     enum type: %w{image video}, _plural_scopes: true
+  #   end
+  #
+  #   Attachment.videos.count
+  #
   #
   # Defining an enum automatically adds a validator on its field. Assigning values
   # not included in enum definition will make the document invalid.
@@ -133,6 +144,7 @@ module Mongoid # :nodoc:
         enum_prefix = definitions.delete(:_prefix)
         enum_suffix = definitions.delete(:_suffix)
         default_key = definitions.delete(:_default)
+        pluralize   = definitions.delete(:_plural_scopes)
 
         definitions.each do |name, values|
           enum_values = ActiveSupport::HashWithIndifferentAccess.new
@@ -187,6 +199,7 @@ module Mongoid # :nodoc:
               end
 
               value_method_name = "#{prefix}#{key}#{suffix}"
+              scope_name = pluralize ? value_method_name.pluralize : value_method_name
 
               # def active?() status == 0 end
               klass.send(:detect_enum_conflict!, name, "#{value_method_name}?")
@@ -197,8 +210,8 @@ module Mongoid # :nodoc:
               define_method("#{value_method_name}!") { update! name => key }
 
               # scope :active, -> { where status: 0 }
-              klass.send(:detect_enum_conflict!, name, value_method_name, true)
-              klass.scope value_method_name, -> { klass.where name => key }
+              klass.send(:detect_enum_conflict!, name, scope_name, true)
+              klass.scope scope_name, -> { klass.where name => key }
             end
           end
 
